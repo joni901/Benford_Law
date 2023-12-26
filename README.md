@@ -1,51 +1,23 @@
-# amazon
-Getting a product from Amazon and being notified when it's available at a price lower than what you're looking for.
+A Lei de Benford, também conhecida como Lei dos Primeiros Dígitos, é um fenômeno estatístico que descreve a distribuição de dígitos em muitos conjuntos de dados do mundo real. A lei afirma que, em muitas coleções de números, o primeiro dígito significativo (o dígito à esquerda) não é uniformemente distribuído, como seria esperado intuitivamente, mas segue uma distribuição logarítmica específica.
+
+De acordo com a Lei de Benford, a probabilidade P(d) de que um número comece com o dígito d (onde d varia de 1 a 9) é dada por:
+
+P(d)=log10(1+1/d)
+
+Essa distribuição implica que o dígito 1 deve ser o primeiro dígito significativo com maior frequência, seguido pelo 2, 3 e assim por diante, com o dígito 9 sendo o menos frequente.
+
+A tabela de frequência esperada, de acordo com a Lei de Benford, seria algo como:
 
 
-from  bs4 import BeautifulSoup
-import requests
-import lxml
-import smtplib
-
-EMAIL=EMAIL
-PASSWORD=PASSWORD
-
-html= "https://www.amazon.com/dp/B075CYMYK6?ref_=cm_sw_r_cp_ud_ct_FM9M699VKHTT47YD50Q6&th=1"
-
-HEADERS1={
-    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-    'Accept-Language' :'en-GB,en;q=0.9,he-IL;q=0.8,he;q=0.7,pt-BR;q=0.6,pt;q=0.5,en-US;q=0.4',
-}
-
-response=requests.get(url=html, headers=HEADERS1)
-print(response.status_code)
-
-html_content=response.content
-
-soup=BeautifulSoup(html_content, "lxml")
-
-soup_div=soup.find(class_= "a-offscreen")
-
-price=soup_div.get_text()
-
-price_int=float(price[1:])
-
-if price_int<100:
-    with open("email", "r") as file:
-        file_read=file.read()
-        data_price=file_read.replace("[prices]", price)
-        data=data_price.replace("[Link Aqui]", html)
-    with open("email", "w") as file_write:
-        oi=file_write.write(data)
-    with open("email", "r") as file_rread:
-        msg= file_rread.read()
-        smtpObj=smtplib.SMTP("smtp.gmail.com", 587)
-        smtpObj.ehlo()
-        smtpObj.starttls()
-        msg_to=EMAIL
-        msg_from=EMAIL
-        smtpObj.login(msg_from, PASSWORD)
-        subject = 'Subject: produtos da amazon\n'
-        body = msg.encode('utf-8')  # Codificar a mensagem em UTF-8
-        msg_with_subject = subject.encode('utf-8') + body
-        smtpObj.sendmail(EMAIL, EMAIL, msg_with_subject)
+|Dígito	|Primeiro dígito|Segundo dígito|Terceiro dígito|Quarto dígito|	
+|-------|---------------|--------------|---------------|-------------|
+|0|Não se aplica|0,12|0,102|0,1|
+|1|0,301|0,114|0,101|0,1|
+|2|0,176|0,109|0,1|0,1|
+|3|0,125|0,104|0,099|0,1|
+|4|0,097|0,1|0,099|0,1|
+|5|0,079|0,097|0,098|0,1|
+|6|0,067|0,093|0,098|0,1|
+|7|0,058|0,09|0,097|0,1|
+|8|	0,051|0,088|0,097|0,1|
+|9|0,046|0,085|0,096|0,1|
