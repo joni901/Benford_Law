@@ -2,7 +2,7 @@ A Lei de Benford, também conhecida como Lei dos Primeiros Dígitos, é um fenô
 
 De acordo com a Lei de Benford, a probabilidade P(d) de que um número comece com o dígito d (onde d varia de 1 a 9) é dada por:
 
-P(d)=log10(1+1/d)
+P(d)=log(1+1/d)
 
 Essa distribuição implica que o dígito 1 deve ser o primeiro dígito significativo com maior frequência, seguido pelo 2, 3 e assim por diante, com o dígito 9 sendo o menos frequente.
 
@@ -21,3 +21,4 @@ A tabela de frequência esperada, de acordo com a Lei de Benford, seria algo com
 |7|0,058|0,09|0,097|0,1|
 |8|	0,051|0,088|0,097|0,1|
 |9|0,046|0,085|0,096|0,1|
+
